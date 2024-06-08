@@ -5,7 +5,7 @@ export default function Sosmed() {
     <div className="flex gap-4 pt-0">
       {/* YT */}
       <svg
-        className="h-14 w-14 hover:scale-75 transition duration-300 ease-in-out"
+        className="md:h-14 md:w-14 hover:scale-75 transition duration-300 ease-in-out"
         viewBox="0 0 24 24"
         height="40"
         width="40"
@@ -17,7 +17,7 @@ export default function Sosmed() {
       {/* IG */}
       <svg
         viewBox="0 0 24 24"
-        className="h-14 w-14 hover:scale-75 transition duration-300 ease-in-out"
+        className="md:h-14 md:w-14 hover:scale-75 transition duration-300 ease-in-out"
         height="40"
         width="40"
         xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ export default function Sosmed() {
       <svg
         height="40"
         viewBox="0 0 24 24"
-        className="h-14 w-14 hover:scale-75 transition duration-300 ease-in-out"
+        className="md:h-14 md:w-14 hover:scale-75 transition duration-300 ease-in-out"
         width="40"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -43,7 +43,7 @@ export default function Sosmed() {
         height="40"
         viewBox="0 0 24 24"
         width="40"
-        className="h-14 w-14 hover:scale-75 transition duration-300 ease-in-out"
+        className="md:h-14 md:w-14 hover:scale-75 transition duration-300 ease-in-out"
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="14.508" cy="9.831" r="6.496" />
@@ -54,7 +54,7 @@ export default function Sosmed() {
       <svg
         height="40"
         viewBox="0 0 24 24"
-        className="h-14 w-14 hover:scale-75 transition duration-300 ease-in-out"
+        className="md:h-14 md:w-14 hover:scale-75 transition duration-300 ease-in-out"
         width="40"
         xmlns="http://www.w3.org/2000/svg"
       >

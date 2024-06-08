@@ -1,5 +1,13 @@
-import Image from "next/image";
-// import Section1 from "./components/section1";
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 interface PropsBox {
   title: string;
@@ -9,26 +17,52 @@ interface PropsBox {
 
 const BoxComponent: React.FC<PropsBox> = ({ description, title, color }) => {
   return (
-    <div className={`${color} group relative`}>
-      <div className="group-hover:translate-x-4 group-hover:-translate-y-4 transition duration-300 ease-in-out px-12 py-16 flex-col border-white border-solid border-4 gap-5">
-        <span className="text-5xl font-bold">{title}</span>
-        <p className="text-3xl">{description}</p>
+    <div className={`${color} group relative box`}>
+      <div className="group-hover:translate-x-4 group-hover:-translate-y-4 transition duration-300 ease-in-out lg:px-12 lg:py-16 px-10 py-8 flex-col border-white border-solid border-4 gap-5">
+        <span className="text-2xl lg:text-5xl font-bold">{title}</span>
+        <p className="text-md lg:text-3xl">{description}</p>
       </div>
     </div>
   );
 };
 
 export default function Section3() {
+  const main = useRef<HTMLElement | any>();
+  useGSAP(
+    () => {
+      gsap.defaults({ ease: "power3" });
+      gsap.set(".box", { y: 50 });
+
+      ScrollTrigger.batch(".box", {
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            stagger: { each: 0.15, grid: [1, 3] },
+            overwrite: true,
+          }),
+        onLeave: (batch) =>
+          gsap.set(batch, { opacity: 0, y: -100, overwrite: true }),
+        onEnterBack: (batch) =>
+          gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true }),
+        onLeaveBack: (batch) =>
+          gsap.set(batch, { opacity: 0, y: 100, overwrite: true }),
+      });
+    },
+    { scope: main }
+  );
   return (
-    <section className="flex w-full flex-col min-h-screen bg-[#3e88ff] p-40">
-      <div className="flex justify-start gap-10 flex-col">
-        <span className="text-6xl font-bold">Our projects</span>
-        <p className="text-4xl">
+    <section className="flex w-full flex-col min-h-screen bg-[#3e88ff] p-12 md:p-20 lg:p-40">
+      <div className="flex justify-start gap-5 lg:gap-10 flex-col">
+        <span className="text-4xl md:text-5xl lg:text-6xl font-bold">
+          Our projects
+        </span>
+        <p className="text-md md:text-2xl lg:text-4xl">
           are very different in terms of priority, scale and complexity of
           implementation
         </p>
       </div>
-      <div className="flex pt-10 flex-col gap-7">
+      <div className="flex pt-10 flex-col gap-7" ref={main}>
         <BoxComponent
           color="bg-[#000]"
           title="Emergency Aid. WAR 2022."

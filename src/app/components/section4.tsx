@@ -1,13 +1,20 @@
-import Image from "next/image";
-// import Section1 from "./components/section1";
+"use client";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 interface PropsBox {
   title: string;
 }
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 const BoxComponent: React.FC<PropsBox> = ({ title }) => {
   return (
-    <div className="bg-white group relative flex">
+    <div className="bg-white group relative flex box">
       <div className="group-hover:translate-x-4 flex w-full justify-start items-center group-hover:-translate-y-4 transition duration-300 ease-in-out border-black border-solid border-4 p-10">
         <span className="text-xl text-black text-center">{title}</span>
       </div>
@@ -16,16 +23,49 @@ const BoxComponent: React.FC<PropsBox> = ({ title }) => {
 };
 
 export default function Section4() {
+  const main = useRef<HTMLElement | any>();
+  // const [boxes, setBoxes] = useState(addBoxes(0));
+  useGSAP(
+    () => {
+      gsap.defaults({ ease: "power3" });
+      gsap.set(".box", { y: 50 });
+
+      ScrollTrigger.batch(".box", {
+        interval: 0.1,
+        batchMax: 3,
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            stagger: { each: 0.15, grid: [1, 3] },
+            overwrite: true,
+            markers: true,
+          }),
+        onLeave: (batch) =>
+          gsap.set(batch, { opacity: 0.5, y: -100, overwrite: true }),
+        onEnterBack: (batch) =>
+          gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true }),
+        onLeaveBack: (batch) =>
+          gsap.set(batch, { opacity: 0, y: 100, overwrite: true }),
+      });
+    },
+    { scope: main }
+  );
   return (
-    <section className="flex min-h-screen flex-col bg-[#fcf944] p-40">
-      <div className="flex justify-start gap-10 flex-col">
-        <span className="text-6xl font-bold text-black">We want to help</span>
-        <p className="text-4xl text-black">
+    <section className="flex min-h-screen flex-col bg-[#fcf944] p-12 md:p-20 lg:p-40">
+      <div className="flex justify-start gap-5 lg:gap-10 flex-col">
+        <span className="text-3xl md:text-5xl lg:text-6xl font-bold text-black">
+          We want to help
+        </span>
+        <p className="text-md md:text-2xl lg:text-4xl text-black">
           homeless packs, volunteers, guardians, overstayers, shelters and other
           organisations
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-10 pt-10">
+      <div
+        className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-7 lg:gap-10 pt-10"
+        ref={main}
+      >
         <BoxComponent title="Shelter of Victoria Bulbyna" />
         <BoxComponent title="City of faithful hearts" />
         <BoxComponent title="Shelter of Natalia Tymoshenko" />
